@@ -543,7 +543,7 @@ main {
   grid-template-columns: 1fr;
 }
 .project__section:has(.marquee) .project__section-label {
-  margin-bottom: 32px;
+  margin-bottom: 18px;
 }
 .project__section:has(.marquee) .project__section-content {
   grid-column: 1;
