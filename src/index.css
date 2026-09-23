@@ -612,7 +612,7 @@ main {
 }
 .marquee__track {
   display: flex;
-  gap: 24px;
+  gap: 40px;
   width: max-content;
   animation-name: marquee-scroll;
   animation-timing-function: linear;
