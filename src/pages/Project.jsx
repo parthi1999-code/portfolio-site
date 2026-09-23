@@ -47,7 +47,7 @@ function ProjectBlock({ block }) {
     case 'image':
       return (
         <figure className="project__block-image">
-          <img src={block.src} alt={block.alt || ''} />
+          <img src={block.src} alt={block.alt || ''} loading="lazy" decoding="async" />
         </figure>
       )
     case 'video':
