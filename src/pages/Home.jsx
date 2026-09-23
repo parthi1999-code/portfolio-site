@@ -311,6 +311,9 @@ function Network() {
         tl.to([state.main, ...state.nodes], { la: 0, duration: 1, ease: 'none' }, 8.8)
         tl.to(state.main, { white: 1, r: 9, duration: 0.8 }, 9.4)
         tl.to(state.nodes, { da: 0, duration: 0.3, ease: 'none' }, 10)
+        if (window.innerWidth <= 1024) {
+          tl.to(canvasRef.current, { opacity: 0, duration: 1, ease: 'none' }, 9.6)
+        }
 
         const text = new SplitText(textRef.current, { type: 'words' })
         const title = new SplitText(ctaTitleRef.current, { type: 'words' })
