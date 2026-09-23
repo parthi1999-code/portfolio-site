@@ -7,7 +7,7 @@ export default function ImageMarquee({ images, speed = 30, variant }) {
       <div className="marquee__track" style={{ animationDuration: `${speed}s` }}>
         {items.map((src, i) => (
           <div className="marquee__item" key={i} aria-hidden={i >= images.length}>
-            <img src={src} alt="" loading="lazy" decoding="async" />
+            <img src={src} alt="" decoding="async" />
           </div>
         ))}
       </div>
