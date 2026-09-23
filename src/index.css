@@ -94,14 +94,19 @@
 html, body, #root { height: 100%; }
 html { overflow-x: hidden; }
 
-#smooth-wrapper {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-#smooth-content {
-  width: 100%;
-  overflow: visible;
+/* ScrollSmoother only runs on desktop (see SmoothScroll.jsx); below that
+   breakpoint the wrapper must stay in normal document flow so native
+   touch scrolling works. */
+@media (min-width: 901px) {
+  #smooth-wrapper {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  #smooth-content {
+    width: 100%;
+    overflow: visible;
+  }
 }
 
 body {
