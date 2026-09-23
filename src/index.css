@@ -536,6 +536,18 @@ main {
 }
 .project__section-content { grid-column: 2; min-width: 0; }
 .project__section--full .project__section-content { grid-column: 1; }
+/* Marquee sections: stack the label above the slider with real space
+   instead of the usual side-by-side layout, since the slider breaks out
+   to full width and reads oddly next to a label in a narrow column. */
+.project__section:has(.marquee) {
+  grid-template-columns: 1fr;
+}
+.project__section:has(.marquee) .project__section-label {
+  margin-bottom: 32px;
+}
+.project__section:has(.marquee) .project__section-content {
+  grid-column: 1;
+}
 @media (max-width: 780px) {
   .project__section { grid-template-columns: 1fr; gap: 16px; }
   .project__section-content { grid-column: 1; }
