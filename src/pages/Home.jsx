@@ -59,7 +59,7 @@ function Hero() {
     <section id="hero" className="hm-hero" data-nav="hero" data-theme="dark">
       <NeonRibbon />
       <p className="hm-hero__tagline" style={{ animationDelay: riseDelay(0.5) }}>
-        From <span className="dim">research</span> to <span className="dim">release</span>: I design
+        From <span className="dim">research</span> to <span className="dim">release</span>, I design
         clear, usable products that turn <span className="dim">complex</span> workflows into{' '}
         <span className="dim">simple</span> experiences.
       </p>
