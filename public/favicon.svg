@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198 198" fill="#62e17a">
+  <g stroke="#62e17a" stroke-width="10" stroke-linejoin="round">
+    <path d="M36 6 H86 V86 H6 V36 Z" />
+    <path d="M36 6 H86 V86 H6 V36 Z" transform="translate(198 0) scale(-1 1)" />
+    <path d="M36 6 H86 V86 H6 V36 Z" transform="translate(0 198) scale(1 -1)" />
+    <path d="M36 6 H86 V86 H6 V36 Z" transform="translate(198 198) scale(-1 -1)" />
+  </g>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2496" height="1560" viewBox="0 0 2496 1560">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#141414"/>
+      <stop offset="100%" stop-color="#0b0b0b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="82%" cy="26%" r="60%">
+      <stop offset="0%" stop-color="#62e17a" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#62e17a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="2496" height="1560" fill="url(#bg)"/>
+  <rect width="2496" height="1560" fill="url(#glow)"/>
+
+  <g stroke="#2a2a2a" stroke-width="1" opacity="0.5">
+    <path d="M0 1170 H2496"/>
+    <path d="M0 990 H2496"/>
+    <path d="M0 810 H2496"/>
+    <path d="M0 630 H2496"/>
+    <path d="M416 300 V1170"/>
+    <path d="M832 300 V1170"/>
+    <path d="M1248 300 V1170"/>
+    <path d="M1664 300 V1170"/>
+    <path d="M2080 300 V1170"/>
+  </g>
+
+  <g opacity="0.9">
+    <rect x="330" y="980" width="90" height="190" fill="none" stroke="#3a5c40" stroke-width="2"/>
+    <rect x="540" y="860" width="90" height="310" fill="none" stroke="#3a5c40" stroke-width="2"/>
+    <rect x="750" y="1040" width="90" height="130" fill="none" stroke="#3a5c40" stroke-width="2"/>
+    <rect x="960" y="760" width="90" height="410" fill="none" stroke="#3a5c40" stroke-width="2"/>
+    <rect x="1170" y="900" width="90" height="270" fill="none" stroke="#3a5c40" stroke-width="2"/>
+    <rect x="1380" y="640" width="90" height="530" fill="none" stroke="#62e17a" stroke-width="2.5"/>
+  </g>
+
+  <path d="M330 1080 C 520 1020, 700 1010, 840 940 S 1080 760, 1260 700 S 1500 520, 1720 470"
+        fill="none" stroke="#62e17a" stroke-width="4" filter="url(#softGlow)"/>
+  <circle cx="840" cy="940" r="7" fill="#62e17a"/>
+  <circle cx="1260" cy="700" r="7" fill="#62e17a"/>
+  <circle cx="1720" cy="470" r="11" fill="#62e17a" filter="url(#softGlow)"/>
+
+  <g fill="#62e17a" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="22" letter-spacing="3" opacity="0.85">
+    <text x="330" y="400">ENERGY MANAGEMENT SYSTEM</text>
+  </g>
+  <g fill="#6b6b6b" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="18" letter-spacing="2">
+    <text x="330" y="445">14 BUILDINGS · APAC · REAL-TIME</text>
+  </g>
+
+  <g stroke="#62e17a" stroke-width="2" opacity="0.9">
+    <path d="M330 300 H366 V336"/>
+    <path d="M2166 300 H2130 V336"/>
+    <path d="M330 1170 H366 V1134"/>
+    <path d="M2166 1170 H2130 V1134"/>
+  </g>
+</svg>
