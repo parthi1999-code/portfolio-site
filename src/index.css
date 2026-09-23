@@ -625,6 +625,7 @@ main {
   flex-shrink: 0;
   width: 860px;
   aspect-ratio: 16 / 9;
+  padding: 16px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -636,6 +637,7 @@ main {
   object-fit: cover;
   object-position: top;
   display: block;
+  border-radius: 6px;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
