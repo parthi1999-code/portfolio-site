@@ -53,6 +53,7 @@ export default function NeonRibbon() {
     let width = 0
     let height = 0
     let raf = 0
+    let visible = true
     const start = performance.now()
 
     const resize = () => {
@@ -102,15 +103,27 @@ export default function NeonRibbon() {
       ctx.lineWidth = 1.3
       ctx.stroke(path)
 
-      if (!reduced) raf = requestAnimationFrame(draw)
+      if (!reduced && visible) raf = requestAnimationFrame(draw)
     }
 
     resize()
     window.addEventListener('resize', resize)
     raf = requestAnimationFrame(draw)
 
+    // Stop redrawing once scrolled out of view instead of burning CPU/GPU
+    // on an off-screen canvas for the rest of the session.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting
+        if (visible && !raf && !reduced) raf = requestAnimationFrame(draw)
+      },
+      { threshold: 0 },
+    )
+    observer.observe(canvas)
+
     return () => {
       cancelAnimationFrame(raf)
+      observer.disconnect()
       window.removeEventListener('resize', resize)
     }
   }, [])
