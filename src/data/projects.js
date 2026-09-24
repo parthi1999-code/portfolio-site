@@ -36,6 +36,11 @@ import legacyImage7 from '../Assests/Slider2/Image 7-web.webp'
 import legacyImage8 from '../Assests/Slider2/Image 8-web.webp'
 import project3Cover from '../Assests/Cover for project three.webp'
 import project4Cover from '../Assests/Cover for project four.webp'
+import p4SignIn from '../Assests/sign - in.webp'
+import p4HomeScreen from '../Assests/Home screen.webp'
+import p4LabTrends from '../Assests/Lab Trends.webp'
+import p4PduMonitoring from '../Assests/PDU Monitoring.webp'
+import p4Alerts from '../Assests/Alerts.webp'
 import markAbHero from '../Assests/Mark AB-1-web.webp'
 import markAbHomepage from '../Assests/Mark AB-2-web.webp'
 
@@ -868,6 +873,16 @@ export const projects = [
             type: 'feature',
             heading: "The Sustainability Director's dashboard.",
             text: 'A longer-horizon view built around progress toward targets, not day-to-day operations.',
+          },
+        ],
+      },
+      {
+        heading: 'More Screens',
+        blocks: [
+          {
+            type: 'marquee',
+            speed: 70,
+            images: [p4SignIn, p4HomeScreen, p4LabTrends, p4PduMonitoring, p4Alerts],
           },
         ],
       },
