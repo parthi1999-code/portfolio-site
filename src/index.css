@@ -946,14 +946,11 @@ main {
   top: 44%;
   max-width: 560px;
   margin: 0;
-  padding: 14px 18px;
-  border-radius: 10px;
   text-align: right;
   font-size: clamp(1.15rem, 1.7vw, 1.7rem);
   line-height: 1.22;
   letter-spacing: -0.04em;
   opacity: 0;
-  background: rgba(13, 13, 13, 0.72);
   animation: hm-fade 0.9s ease forwards;
 }
 .hm-hero__tagline .dim { color: #8a8a8a; }
