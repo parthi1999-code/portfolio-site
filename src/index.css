@@ -964,7 +964,7 @@ main {
   font-weight: 300;
   letter-spacing: -0.05em;
 }
-.hm-rise { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.hm-rise { display: block; overflow: hidden; padding-bottom: 0.2em; margin-bottom: -0.2em; }
 .hm-rise > span { display: block; transform: translateY(105%); animation: hm-rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 @keyframes hm-rise { to { transform: translateY(0); } }
 @keyframes hm-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
