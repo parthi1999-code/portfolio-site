@@ -953,9 +953,7 @@ main {
   line-height: 1.22;
   letter-spacing: -0.04em;
   opacity: 0;
-  background: rgba(13, 13, 13, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(13, 13, 13, 0.72);
   animation: hm-fade 0.9s ease forwards;
 }
 .hm-hero__tagline .dim { color: #8a8a8a; }
