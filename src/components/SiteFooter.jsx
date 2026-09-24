@@ -49,7 +49,7 @@ export default function SiteFooter() {
 
       <div className="hm-footer__legal">
         <span>© {year} Parthi Guru. All rights reserved.</span>
-        <span>UX Designer @e4</span>
+        <span>UX Designer</span>
       </div>
     </div>
   )
