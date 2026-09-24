@@ -18,7 +18,7 @@ import { GMAIL_COMPOSE_URL } from '../data/contact.js'
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
 const ABOUT_TEXT =
-  'I turn complex problems into practical, intuitive products, helping teams ship interfaces people actually understand. With a research-led and detail-obsessed approach, I support the growth of your product, making every design decision more effective and user-focused.'
+  'I love taking messy, complex problems and shaping them into products that feel effortless to use. I start with research, obsess over the details, and make sure every design choice helps your users and your business.'
 
 const EXPERTISE = [
   {
