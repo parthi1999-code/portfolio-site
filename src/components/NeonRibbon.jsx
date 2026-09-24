@@ -104,6 +104,7 @@ export default function NeonRibbon() {
       ctx.stroke(path)
 
       if (!reduced && visible) raf = requestAnimationFrame(draw)
+      else raf = 0
     }
 
     resize()
