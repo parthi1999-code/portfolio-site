@@ -53,8 +53,17 @@ export default function NeonRibbon() {
     let width = 0
     let height = 0
     let raf = 0
-    let visible = true
     const start = performance.now()
+
+    // IntersectionObserver doesn't reliably re-fire for visibility changes
+    // driven by an ancestor's CSS transform (that's how ScrollSmoother
+    // "scrolls" the page) on every browser -- it can leave the loop
+    // permanently paused after a route change. A direct rect check inside
+    // the loop works identically everywhere.
+    const isInView = () => {
+      const rect = canvas.getBoundingClientRect()
+      return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
+    }
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -71,6 +80,11 @@ export default function NeonRibbon() {
     }
 
     const draw = (now) => {
+      if (!isInView()) {
+        raf = reduced ? 0 : requestAnimationFrame(draw)
+        return
+      }
+
       const phase = ((now - start) / 1000) * 0.35
       ctx.clearRect(0, 0, width, height)
 
@@ -103,28 +117,15 @@ export default function NeonRibbon() {
       ctx.lineWidth = 1.3
       ctx.stroke(path)
 
-      if (!reduced && visible) raf = requestAnimationFrame(draw)
-      else raf = 0
+      raf = reduced ? 0 : requestAnimationFrame(draw)
     }
 
     resize()
     window.addEventListener('resize', resize)
     raf = requestAnimationFrame(draw)
 
-    // Stop redrawing once scrolled out of view instead of burning CPU/GPU
-    // on an off-screen canvas for the rest of the session.
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting
-        if (visible && !raf && !reduced) raf = requestAnimationFrame(draw)
-      },
-      { threshold: 0 },
-    )
-    observer.observe(canvas)
-
     return () => {
       cancelAnimationFrame(raf)
-      observer.disconnect()
       window.removeEventListener('resize', resize)
     }
   }, [])
