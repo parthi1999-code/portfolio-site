@@ -1474,3 +1474,45 @@ main {
   .glow-lines--auto .glow-lines__v,
   .glow-lines--auto .glow-lines__h { animation: none; opacity: 0; }
 }
+
+/* iOS/iPadOS Safari keeps :hover "stuck" on the last tapped element
+   (there's no mouse to leave), which left decorative hover-only states
+   -- the work-row sweep bars, CTA border glow, glow-lines, skill-tag
+   glow -- visibly stuck on after a single tap. Force them back to their
+   resting look on devices that can't really hover. */
+@media (hover: none), (pointer: coarse) {
+  .hm-row:hover .hm-row__sweep i {
+    opacity: 0;
+    transform: scaleX(0.35);
+  }
+  .hm-row:hover .hm-row__index,
+  .hm-row:hover .hm-row__title { color: #8d8888; }
+  .hm-row:hover .hm-row__year,
+  .hm-row:hover .hm-row__cat { color: #807b7b; }
+  .hm-row:hover .hm-row__arrow {
+    background: rgba(98, 225, 122, 0.35);
+    color: #4a7a52;
+  }
+  .hm-btn:hover .hm-btn__arrow { transform: none; }
+  .hm-btn:hover, .project__next-btn:hover {
+    border-color: rgba(98, 225, 122, 0.6);
+    box-shadow: none;
+  }
+  .project__next-btn:hover { border-color: var(--fg); }
+  .about__skills-list li:hover {
+    border-color: rgba(17, 17, 17, 0.25);
+    box-shadow: none;
+  }
+  .hm-btn:hover .glow-lines:not(.glow-lines--auto) span,
+  .project__next-btn:hover .glow-lines:not(.glow-lines--auto) span {
+    opacity: 0;
+  }
+  .hm-btn:hover .glow-lines:not(.glow-lines--auto) .glow-lines__v,
+  .project__next-btn:hover .glow-lines:not(.glow-lines--auto) .glow-lines__v {
+    transform: translate(-50%, -50%) scaleY(0.4);
+  }
+  .hm-btn:hover .glow-lines:not(.glow-lines--auto) .glow-lines__h,
+  .project__next-btn:hover .glow-lines:not(.glow-lines--auto) .glow-lines__h {
+    transform: translate(-50%, -50%) scaleX(0.4);
+  }
+}
