@@ -25,12 +25,12 @@ function sectionCorners(u, phase) {
   const t = normalize([p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]])
   const b = normalize(cross(t, [0, 0, 1]))
   const n = cross(b, t)
-  const theta = u * 7 + phase * 2
+  const theta = phase * 0.15
   const c = Math.cos(theta)
   const s = Math.sin(theta)
   const bx = [b[0] * c + n[0] * s, b[1] * c + n[1] * s, b[2] * c + n[2] * s]
   const nx = [-b[0] * s + n[0] * c, -b[1] * s + n[1] * c, -b[2] * s + n[2] * c]
-  const size = 0.045 + 0.018 * Math.sin(u * 9 + phase)
+  const size = 0.052 + 0.006 * Math.sin(u * 9 + phase)
   return [
     [1, 1],
     [1, -1],
