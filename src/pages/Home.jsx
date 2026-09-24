@@ -493,17 +493,17 @@ function Expertise({ cols, rows }) {
         </div>
       </div>
       <div className="hm-expertise__head">
-        <Reveal as="h2" className="hm-h2">
+        <Reveal as="h2" className="hm-h2" blur duration={1}>
           I design end-to-end digital products.
         </Reveal>
-        <Reveal as="p" className="hm-lead">
+        <Reveal as="p" className="hm-lead" blur duration={1} delay={0.15}>
           From research and flows to high-fidelity screens and developer handoff, I shape products
           that are as clear to use as they are considered in detail.
         </Reveal>
       </div>
       <div className="hm-cards">
-        {EXPERTISE.map(({ tag, title, text, Illustration }) => (
-          <Reveal key={tag} className="hm-card">
+        {EXPERTISE.map(({ tag, title, text, Illustration }, i) => (
+          <Reveal key={tag} className="hm-card" blur y={20} duration={0.9} delay={i * 0.15}>
             <span className="hm-card__corner hm-card__corner--tl" />
             <span className="hm-card__corner hm-card__corner--tr" />
             <span className="hm-card__corner hm-card__corner--bl" />
