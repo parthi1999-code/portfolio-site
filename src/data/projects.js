@@ -35,7 +35,7 @@ import legacyImage6 from '../Assests/Slider2/Image 6-web.webp'
 import legacyImage7 from '../Assests/Slider2/Image 7-web.webp'
 import legacyImage8 from '../Assests/Slider2/Image 8-web.webp'
 import project3Cover from '../Assests/Cover for project three.webp'
-import project4Cover from '../Assests/Cover for project four.svg'
+import project4Cover from '../Assests/Cover for project four.webp'
 import markAbHero from '../Assests/Mark AB-1-web.webp'
 import markAbHomepage from '../Assests/Mark AB-2-web.webp'
 
