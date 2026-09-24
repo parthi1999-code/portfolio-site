@@ -232,7 +232,7 @@ function Network() {
       const x = node.x * W
       const y = node.y * H
       const g = ctx2d.createLinearGradient(0, 0, Math.max(x, 1), 0)
-      g.addColorStop(0, `rgba(${GREEN_RGB}, ${(0.12 * a).toFixed(3)})`)
+      g.addColorStop(0, `rgba(${GREEN_RGB}, ${(0.4 * a).toFixed(3)})`)
       g.addColorStop(1, `rgba(${GREEN_RGB}, ${(0.95 * a).toFixed(3)})`)
       ctx2d.strokeStyle = g
       ctx2d.lineWidth = 1.5
