@@ -753,7 +753,7 @@ main {
   font-size: 0.9rem;
   border-left: 2px solid var(--border);
   padding-left: 16px;
-  margin: 0;
+  margin: 0 0 20px;
 }
 
 .page.project .marquee__item { background: #efe9e1; border-color: var(--border); }
