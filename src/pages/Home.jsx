@@ -15,6 +15,7 @@ import { scrollToSection } from '../components/HomeChrome.jsx'
 import { DURATION_MS as INTRO_DURATION_MS } from '../components/IntroAnimation.jsx'
 import { projects } from '../data/projects.js'
 import { GMAIL_COMPOSE_URL } from '../data/contact.js'
+import parthiReel from '../Assests/Parthi_Reel_v2_InfiniteZoom.mp4'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -606,6 +607,44 @@ function Work() {
   )
 }
 
+function Reel() {
+  const videoRef = useRef(null)
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || reduced) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      { threshold: 0.25 },
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [reduced])
+
+  return (
+    <section id="reel" className="hm-reel" data-nav="work" data-theme="dark">
+      <Reveal as="p" className="hm-reel__label">
+        Showreel
+      </Reveal>
+      <video
+        ref={videoRef}
+        className="hm-reel__video"
+        src={parthiReel}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        controls={reduced}
+        aria-label="Parthi Guru showreel"
+      />
+    </section>
+  )
+}
+
 export default function Home() {
   const location = useLocation()
   const { cols, rows } = useGridSize()
@@ -642,6 +681,7 @@ export default function Home() {
       <Network />
       <Expertise cols={cols} rows={rows} />
       <Work />
+      <Reel />
     </div>
   )
 }
