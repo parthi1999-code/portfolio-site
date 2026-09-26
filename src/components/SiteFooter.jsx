@@ -16,7 +16,8 @@ function PixelArrow() {
   )
 }
 
-const MARQUEE_ITEMS = Array.from({ length: 6 })
+const MARQUEE_PHRASES = ['THINK WITH ME', 'MAKE WITH ME', 'BREAK WITH ME', 'VIBE WITH ME']
+const MARQUEE_ITEMS = Array.from({ length: 3 }).flatMap(() => MARQUEE_PHRASES)
 
 export default function SiteFooter() {
   const year = new Date().getFullYear()
@@ -29,10 +30,10 @@ export default function SiteFooter() {
 
       <div className="hm-marquee" aria-hidden="true">
         <div className="hm-marquee__track">
-          {MARQUEE_ITEMS.map((_, i) => (
+          {MARQUEE_ITEMS.map((phrase, i) => (
             <span key={i} className="hm-marquee__item">
               <PixelArrow />
-              <span>Work with me</span>
+              <span>{phrase}</span>
             </span>
           ))}
         </div>

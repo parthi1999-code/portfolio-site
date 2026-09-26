@@ -1260,7 +1260,7 @@ main {
 .hm-marquee__track { display: flex; width: max-content; animation: hm-marquee 30s linear infinite; }
 .hm-marquee__item { display: flex; align-items: center; gap: 0.3em; padding: 0 0.4em; font-size: clamp(3.5rem, 10vw, 11rem); line-height: 1.1; letter-spacing: -0.05em; white-space: nowrap; }
 .hm-marquee__arrow { width: 0.68em; height: 0.68em; fill: var(--green); flex-shrink: 0; }
-@keyframes hm-marquee { to { transform: translateX(calc(-100% / 6)); } }
+@keyframes hm-marquee { to { transform: translateX(calc(-100% / 3)); } }
 .hm-footer__body { position: relative; margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; padding-bottom: 70px; }
 .hm-footer__info { display: flex; flex-direction: column; gap: 10px; }
 .hm-footer__info h4 { margin: 0 0 8px; font: 700 15px 'JetBrains Mono', ui-monospace, monospace; text-transform: uppercase; }
@@ -1402,7 +1402,7 @@ main {
   will-change: transform, opacity;
 }
 
-/* Top bar fades away when the "Work with me" strip reaches it */
+/* Top bar fades away when the footer marquee strip reaches it */
 .hm-chrome__top { transition: opacity 0.4s ease; }
 .hm-chrome--top-hidden .hm-chrome__top { opacity: 0; }
 .hm-chrome--top-hidden .hm-chrome__top * { pointer-events: none; }
