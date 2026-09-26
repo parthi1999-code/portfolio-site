@@ -36,6 +36,23 @@ export default function HeroObject() {
     const shell = new THREE.LineSegments(shellEdges, shellMat)
     group.add(shell)
 
+    // invisible solid volume used only for hover/hit-testing, so the drag
+    // cursor and drag-start only engage over the object itself, not the
+    // full-bleed transparent canvas around it
+    const hitMat = new THREE.MeshBasicMaterial({ visible: false })
+    const hitMesh = new THREE.Mesh(coreGeo, hitMat)
+    group.add(hitMesh)
+
+    const raycaster = new THREE.Raycaster()
+    const pointerNDC = new THREE.Vector2()
+    const isOverObject = (clientX, clientY) => {
+      const rect = canvas.getBoundingClientRect()
+      pointerNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1
+      pointerNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1
+      raycaster.setFromCamera(pointerNDC, camera)
+      return raycaster.intersectObject(hitMesh).length > 0
+    }
+
     // drag-to-rotate: offset accumulates on top of the ambient auto-rotation
     // below, and carries a bit of spin momentum after release.
     const offset = { x: 0, y: 0 }
@@ -43,6 +60,7 @@ export default function HeroObject() {
     const drag = { active: false, lastX: 0, lastY: 0, pointerId: null }
 
     const onPointerDown = (e) => {
+      if (!isOverObject(e.clientX, e.clientY)) return
       drag.active = true
       drag.lastX = e.clientX
       drag.lastY = e.clientY
@@ -53,26 +71,29 @@ export default function HeroObject() {
       canvas.style.cursor = 'grabbing'
     }
     const onPointerMove = (e) => {
-      if (!drag.active || e.pointerId !== drag.pointerId) return
-      const dx = e.clientX - drag.lastX
-      const dy = e.clientY - drag.lastY
-      drag.lastX = e.clientX
-      drag.lastY = e.clientY
-      const vy = dx * DRAG_SENSITIVITY
-      const vx = dy * DRAG_SENSITIVITY
-      offset.y += vy
-      offset.x += vx
-      velocity.y = vy
-      velocity.x = vx
+      if (drag.active) {
+        if (e.pointerId !== drag.pointerId) return
+        const dx = e.clientX - drag.lastX
+        const dy = e.clientY - drag.lastY
+        drag.lastX = e.clientX
+        drag.lastY = e.clientY
+        const vy = dx * DRAG_SENSITIVITY
+        const vx = dy * DRAG_SENSITIVITY
+        offset.y += vy
+        offset.x += vx
+        velocity.y = vy
+        velocity.x = vx
+        return
+      }
+      canvas.style.cursor = isOverObject(e.clientX, e.clientY) ? 'grab' : ''
     }
     const endDrag = (e) => {
       if (drag.pointerId !== null && e.pointerId !== undefined && e.pointerId !== drag.pointerId) return
       drag.active = false
       drag.pointerId = null
-      canvas.style.cursor = 'grab'
+      canvas.style.cursor = isOverObject(e.clientX, e.clientY) ? 'grab' : ''
     }
 
-    canvas.style.cursor = 'grab'
     canvas.style.touchAction = 'none'
     canvas.addEventListener('pointerdown', onPointerDown)
     canvas.addEventListener('pointermove', onPointerMove)
@@ -135,6 +156,7 @@ export default function HeroObject() {
       shellGeo.dispose()
       shellEdges.dispose()
       shellMat.dispose()
+      hitMat.dispose()
       renderer.dispose()
     }
   }, [])
