@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
-import NeonRibbon from '../components/NeonRibbon.jsx'
+
+const HeroObject = lazy(() => import('../components/HeroObject.jsx'))
 import GlowLines from '../components/GlowLines.jsx'
 import ScrambleText from '../components/ScrambleText.jsx'
 import CtaArrow from '../components/CtaArrow.jsx'
@@ -57,7 +58,9 @@ function Rise({ children, offset = 0 }) {
 function Hero() {
   return (
     <section id="hero" className="hm-hero" data-nav="hero" data-theme="dark">
-      <NeonRibbon />
+      <Suspense fallback={null}>
+        <HeroObject />
+      </Suspense>
       <p className="hm-hero__tagline" style={{ animationDelay: riseDelay(0.5) }}>
         From <span className="dim">research</span> to <span className="dim">release</span>, I design
         clear, usable products that turn <span className="dim">complex</span> workflows into{' '}
