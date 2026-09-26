@@ -934,7 +934,7 @@ main {
   color: var(--hm-white);
   overflow: hidden;
 }
-.hm-ribbon { position: absolute; top: 0; right: 0; width: 62%; height: 100%; display: block; }
+.hm-hero-object { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hm-hero__tagline {
   position: absolute;
   z-index: 1;
@@ -1276,7 +1276,7 @@ main {
 @media (max-width: 900px) {
   .hm-chrome__nav { display: none; }
   .hm-chrome__top { top: 20px; left: 20px; right: 20px; }
-  .hm-ribbon { width: 100%; opacity: 0.55; }
+  .hm-hero-object { opacity: 0.55; }
   .hm-hero__title { left: 20px; }
   .hm-hero__tagline { right: 20px; left: 20px; top: 22%; max-width: none; text-align: left; }
   .hm-about {
