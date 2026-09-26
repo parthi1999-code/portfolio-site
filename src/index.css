@@ -1159,12 +1159,8 @@ main {
 .hm-row:hover .hm-row__cat { color: #111; }
 .hm-row:hover .hm-row__arrow { background: #3fcf5c; color: #0b0b0b; }
 
-/* Contact + footer */
-.hm-contact { background: var(--hm-dark); color: var(--hm-white); }
-.hm-cta { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px; }
-.hm-cta__title { margin: 0 0 30px; font-size: clamp(2.6rem, 6.2vw, 6rem); font-weight: 300; line-height: 1; letter-spacing: -0.055em; }
+/* Footer */
 .hm-glow { color: var(--green); text-shadow: 0 0 22px rgba(98, 225, 122, 0.55), 0 0 60px rgba(98, 225, 122, 0.25); }
-.hm-cta__text { margin: 0 0 44px; max-width: 30ch; font-size: clamp(1rem, 1.25vw, 1.3rem); line-height: 1.25; letter-spacing: -0.03em; }
 .hm-btn {
   display: inline-flex;
   align-items: center;
@@ -1266,7 +1262,6 @@ main {
 }
 
 .hm-footer { position: relative; overflow: hidden; background: var(--hm-dark); min-height: 100vh; padding: 60px 60px 30px; display: flex; flex-direction: column; }
-.hm-contact { position: relative; }
 .hm-marquee, .hm-footer__body, .hm-footer__legal { z-index: 2; }
 .hm-footer__floor {
   position: absolute;
@@ -1421,28 +1416,6 @@ main {
 .hm-dissolve { position: absolute; left: 0; right: 0; bottom: 0; height: 100vh; z-index: 5; overflow: hidden; pointer-events: none; }
 .hm-dissolve__fill { position: absolute; inset: -2px; background: var(--hm-light); opacity: 0; visibility: hidden; }
 .hm-pixels--light span { background: var(--hm-light); box-shadow: 0 0 0 1px var(--hm-light); }
-
-/* Contact CTA: green tint + expanding rings (word-by-word text, button reveal) */
-.hm-cta { position: relative; overflow: hidden; }
-.hm-cta > *:not(.hm-cta__tint):not(.hm-ring) { position: relative; z-index: 1; }
-.hm-cta__tint {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(98, 225, 122, 0.16) 0%, rgba(98, 225, 122, 0.08) 55%, rgba(98, 225, 122, 0.03) 100%);
-}
-.hm-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 620px;
-  height: 620px;
-  margin: -310px 0 0 -310px;
-  border: 1px solid rgba(98, 225, 122, 0.6);
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
 
 /* Top bar fades away when the footer marquee strip reaches it */
 .hm-chrome__top { transition: opacity 0.4s ease; }

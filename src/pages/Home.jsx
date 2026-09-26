@@ -606,94 +606,6 @@ function Work() {
   )
 }
 
-function ContactCta() {
-  const rootRef = useRef(null)
-  const tintRef = useRef(null)
-  const ringRefs = useRef([])
-  const titleRef = useRef(null)
-  const textRef = useRef(null)
-  const btnRef = useRef(null)
-  const scrambleRef = useRef(null)
-
-  useEffect(() => {
-    let cancelled = false
-    let ctx
-    const splits = []
-    document.fonts.ready.then(() => {
-      if (cancelled || !rootRef.current) return
-      ctx = gsap.context(() => {
-        const title = new SplitText(titleRef.current, { type: 'words' })
-        const text = new SplitText(textRef.current, { type: 'words' })
-        splits.push(title, text)
-
-        gsap.set(title.words, { opacity: 0 })
-        gsap.set(text.words, { opacity: 0 })
-        gsap.set(btnRef.current, { clipPath: 'inset(0 0 100% 0)' })
-        gsap.set(tintRef.current, { opacity: 0 })
-        gsap.set(ringRefs.current, { opacity: 0, scale: 0.5 })
-
-        const tl = gsap.timeline({
-          paused: true,
-          scrollTrigger: { trigger: rootRef.current, start: 'top 55%', once: true, onEnter: () => tl.play() },
-        })
-        tl.to(tintRef.current, { opacity: 1, duration: 0.5, ease: 'power1.out' }, 0)
-        tl.to(tintRef.current, { opacity: 0, duration: 2.2, ease: 'power1.inOut' }, 0.7)
-        ringRefs.current.forEach((ring, i) => {
-          tl.to(ring, { opacity: 0.7, duration: 0.5, ease: 'none' }, 0.1 + i * 0.22)
-          tl.to(ring, { scale: 3.6 + i * 0.5, duration: 3.4, ease: 'power2.out' }, 0.1 + i * 0.22)
-          tl.to(ring, { opacity: 0, duration: 1.4, ease: 'power1.in' }, 1.9 + i * 0.3)
-        })
-        tl.to(title.words, { opacity: 1, duration: 0.35, ease: 'none', stagger: 0.16 }, 0.5)
-        tl.to(text.words, { opacity: 1, duration: 0.3, ease: 'none', stagger: 0.05 }, 1.3)
-        tl.to(btnRef.current, { clipPath: 'inset(0 0 0% 0)', duration: 0.7, ease: 'power2.out' }, 2)
-      }, rootRef)
-    })
-    return () => {
-      cancelled = true
-      if (ctx) ctx.revert()
-      splits.forEach((s) => s.revert())
-    }
-  }, [])
-
-  return (
-    <div ref={rootRef} className="hm-cta" data-nav="contact" data-theme="dark">
-      <div ref={tintRef} className="hm-cta__tint" aria-hidden="true" />
-      {[0, 1, 2].map((i) => (
-        <span key={i} ref={(el) => (ringRefs.current[i] = el)} className="hm-ring" aria-hidden="true" />
-      ))}
-      <h2 ref={titleRef} className="hm-cta__title">
-        Let&apos;s build something <span className="hm-glow">great</span>
-      </h2>
-      <p ref={textRef} className="hm-cta__text">
-        Your users already know what they need. You just need the right design to answer it.
-      </p>
-      <a
-        ref={btnRef}
-        className="hm-btn"
-        href={GMAIL_COMPOSE_URL}
-        target="_blank"
-        rel="noreferrer"
-        onMouseEnter={() => scrambleRef.current?.start()}
-        onMouseLeave={() => scrambleRef.current?.reset()}
-      >
-        <GlowLines />
-        <ScrambleText ref={scrambleRef} text="Get in touch" />
-        <span className="hm-btn__arrow" aria-hidden="true">
-          <CtaArrow />
-        </span>
-      </a>
-    </div>
-  )
-}
-
-function Contact() {
-  return (
-    <section id="contact" className="hm-contact">
-      <ContactCta />
-    </section>
-  )
-}
-
 export default function Home() {
   const location = useLocation()
   const { cols, rows } = useGridSize()
@@ -730,7 +642,6 @@ export default function Home() {
       <Network />
       <Expertise cols={cols} rows={rows} />
       <Work />
-      <Contact />
     </div>
   )
 }
