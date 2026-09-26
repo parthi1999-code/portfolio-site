@@ -26,10 +26,10 @@ export default function Traces({ className = 'hm-about__traces' }) {
       const len = vertical ? y2 - y1 : x2 - x1
       const s = Math.min(Math.max((from - (vertical ? y1 : x1)) / len, 0), 1)
       const e = Math.min(Math.max((to - (vertical ? y1 : x1)) / len, 0), 1)
-      g.addColorStop(0, 'rgba(47, 95, 255, 0)')
-      g.addColorStop(s, `rgba(47, 95, 255, ${a.toFixed(3)})`)
-      g.addColorStop(e, `rgba(47, 95, 255, ${a.toFixed(3)})`)
-      g.addColorStop(1, 'rgba(47, 95, 255, 0)')
+      g.addColorStop(0, 'rgba(98, 225, 122, 0)')
+      g.addColorStop(s, `rgba(98, 225, 122, ${a.toFixed(3)})`)
+      g.addColorStop(e, `rgba(98, 225, 122, ${a.toFixed(3)})`)
+      g.addColorStop(1, 'rgba(98, 225, 122, 0)')
       ctx.strokeStyle = g
       ctx.beginPath()
       ctx.moveTo(x1, y1)
@@ -43,7 +43,7 @@ export default function Traces({ className = 'hm-about__traces' }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       boxes = boxes.filter((b) => now - b.t < LIFE)
       ctx.lineWidth = 0.2
-      ctx.shadowColor = 'rgba(47, 95, 255, 0.7)'
+      ctx.shadowColor = 'rgba(98, 225, 122, 0.7)'
       ctx.shadowBlur = 3 * dpr
       boxes.forEach((b) => {
         const a = 1 - (now - b.t) / LIFE
