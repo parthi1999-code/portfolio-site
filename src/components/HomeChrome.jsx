@@ -9,6 +9,7 @@ export const HOME_NAV = [
   { id: 'about', label: 'About' },
   { id: 'expertise', label: 'Expertise' },
   { id: 'work', label: 'Work' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export function scrollToSection(id) {
@@ -23,6 +24,7 @@ const QUICK_NAV = [
   { id: 'about', label: 'About' },
   { id: 'expertise', label: 'Expertise' },
   { id: 'work', label: 'Works' },
+  { id: 'contact', label: 'Contact us' },
 ]
 
 const PIXEL_ARROW_CELLS = [
