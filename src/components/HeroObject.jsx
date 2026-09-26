@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 const GREEN = 0x66ff8c
+const DRAG_SENSITIVITY = 0.008
+const INERTIA_DECAY = 0.94
 
 export default function HeroObject() {
   const canvasRef = useRef(null)
@@ -34,6 +36,49 @@ export default function HeroObject() {
     const shell = new THREE.LineSegments(shellEdges, shellMat)
     group.add(shell)
 
+    // drag-to-rotate: offset accumulates on top of the ambient auto-rotation
+    // below, and carries a bit of spin momentum after release.
+    const offset = { x: 0, y: 0 }
+    const velocity = { x: 0, y: 0 }
+    const drag = { active: false, lastX: 0, lastY: 0, pointerId: null }
+
+    const onPointerDown = (e) => {
+      drag.active = true
+      drag.lastX = e.clientX
+      drag.lastY = e.clientY
+      drag.pointerId = e.pointerId
+      velocity.x = 0
+      velocity.y = 0
+      canvas.setPointerCapture(e.pointerId)
+      canvas.style.cursor = 'grabbing'
+    }
+    const onPointerMove = (e) => {
+      if (!drag.active || e.pointerId !== drag.pointerId) return
+      const dx = e.clientX - drag.lastX
+      const dy = e.clientY - drag.lastY
+      drag.lastX = e.clientX
+      drag.lastY = e.clientY
+      const vy = dx * DRAG_SENSITIVITY
+      const vx = dy * DRAG_SENSITIVITY
+      offset.y += vy
+      offset.x += vx
+      velocity.y = vy
+      velocity.x = vx
+    }
+    const endDrag = (e) => {
+      if (drag.pointerId !== null && e.pointerId !== undefined && e.pointerId !== drag.pointerId) return
+      drag.active = false
+      drag.pointerId = null
+      canvas.style.cursor = 'grab'
+    }
+
+    canvas.style.cursor = 'grab'
+    canvas.style.touchAction = 'none'
+    canvas.addEventListener('pointerdown', onPointerDown)
+    canvas.addEventListener('pointermove', onPointerMove)
+    canvas.addEventListener('pointerup', endDrag)
+    canvas.addEventListener('pointercancel', endDrag)
+
     const isInView = () => {
       const rect = canvas.getBoundingClientRect()
       return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
@@ -57,8 +102,15 @@ export default function HeroObject() {
       const t = (now - start) / 1000
 
       if (!reduced) {
-        group.rotation.y = t * 0.18
-        group.rotation.x = Math.sin(t * 0.12) * 0.25
+        if (!drag.active) {
+          // let released spin decay smoothly back to rest
+          offset.y += velocity.y
+          offset.x += velocity.x
+          velocity.y *= INERTIA_DECAY
+          velocity.x *= INERTIA_DECAY
+        }
+        group.rotation.y = t * 0.18 + offset.y
+        group.rotation.x = Math.sin(t * 0.12) * 0.25 + offset.x
         group.position.y = Math.sin(t * 0.3) * 0.15
       }
 
@@ -73,6 +125,10 @@ export default function HeroObject() {
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
+      canvas.removeEventListener('pointerdown', onPointerDown)
+      canvas.removeEventListener('pointermove', onPointerMove)
+      canvas.removeEventListener('pointerup', endDrag)
+      canvas.removeEventListener('pointercancel', endDrag)
       coreGeo.dispose()
       coreEdges.dispose()
       coreMat.dispose()
