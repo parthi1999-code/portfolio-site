@@ -1257,7 +1257,7 @@ main {
   .hm-footer__grid { animation: none; }
 }
 .hm-marquee { position: relative; overflow: hidden; margin: 0 -60px; }
-.hm-marquee__track { display: flex; width: max-content; animation: hm-marquee 30s linear infinite; }
+.hm-marquee__track { display: flex; width: max-content; animation: hm-marquee 38s linear infinite; }
 .hm-marquee__item { display: flex; align-items: center; gap: 0.3em; padding: 0 0.4em; font-size: clamp(3.5rem, 10vw, 11rem); line-height: 1.1; letter-spacing: -0.05em; white-space: nowrap; }
 .hm-marquee__arrow { width: 0.68em; height: 0.68em; fill: var(--green); flex-shrink: 0; }
 @keyframes hm-marquee { to { transform: translateX(calc(-100% / 3)); } }
