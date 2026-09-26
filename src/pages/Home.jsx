@@ -210,6 +210,8 @@ function Network() {
     let cancelled = false
     let ctx
     let timeline = null
+    let raf = 0
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const splits = []
 
     const state = {
@@ -263,9 +265,18 @@ function Network() {
       el.style.transform = `translate(${node.x * W}px, ${node.y * H - r - 10}px) translate(-50%, -100%)`
     }
 
-    function draw() {
+    const isInView = () => {
+      const rect = canvas.getBoundingClientRect()
+      return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
+    }
+
+    function draw(now = performance.now()) {
       if (!W) return
-      const time = timeline ? timeline.time() : 0
+      const baseTime = timeline ? timeline.time() : 0
+      // gentle idle drift so the nodes keep gliding along their tracks even
+      // when the user isn't scrolling, instead of sitting completely frozen
+      const idle = reduced ? 0 : Math.sin(now * 0.00015) * 1.2
+      const time = baseTime + idle
       ;[state.main.x, state.main.y] = sampleTrack(MAIN_TRACK, time)
       NET_NODES.forEach((n, i) => {
         ;[state.nodes[i].x, state.nodes[i].y] = sampleTrack(n.track, time)
@@ -286,6 +297,14 @@ function Network() {
 
     resize()
     window.addEventListener('resize', resize)
+
+    if (!reduced) {
+      const tick = (now) => {
+        if (isInView()) draw(now)
+        raf = requestAnimationFrame(tick)
+      }
+      raf = requestAnimationFrame(tick)
+    }
 
     document.fonts.ready.then(() => {
       if (cancelled) return
@@ -333,6 +352,7 @@ function Network() {
 
     return () => {
       cancelled = true
+      cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
       if (ctx) ctx.revert()
       splits.forEach((s) => s.revert())
