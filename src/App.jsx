@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import HomeChrome from './components/HomeChrome.jsx'
 import SiteFooter from './components/SiteFooter.jsx'
 import IntroAnimation from './components/IntroAnimation.jsx'
+import PageTransition from './components/PageTransition.jsx'
 import SmoothScroll from './components/SmoothScroll.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home.jsx'
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <>
       <IntroAnimation />
+      <PageTransition />
       <ScrollToTop />
       <div className="grain" aria-hidden="true" />
       <HomeChrome />
