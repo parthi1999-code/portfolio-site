@@ -94,11 +94,21 @@ export default function HeroObject() {
       canvas.style.cursor = isOverObject(e.clientX, e.clientY) ? 'grab' : ''
     }
 
-    canvas.style.touchAction = 'none'
-    canvas.addEventListener('pointerdown', onPointerDown)
-    canvas.addEventListener('pointermove', onPointerMove)
-    canvas.addEventListener('pointerup', endDrag)
-    canvas.addEventListener('pointercancel', endDrag)
+    // Drag-to-rotate needs touch-action: none to stop the browser trying to
+    // scroll while you drag the object, but this canvas spans the entire
+    // hero banner -- on a touch device that means EVERY touch anywhere in
+    // the hero, not just on the object, would be blocked from scrolling the
+    // page. Only wire up the drag interaction (and disable touch scrolling)
+    // on devices with a fine pointer; touch devices keep native scroll and
+    // just get the ambient auto-rotation.
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+    if (!isCoarsePointer) {
+      canvas.style.touchAction = 'none'
+      canvas.addEventListener('pointerdown', onPointerDown)
+      canvas.addEventListener('pointermove', onPointerMove)
+      canvas.addEventListener('pointerup', endDrag)
+      canvas.addEventListener('pointercancel', endDrag)
+    }
 
     const isInView = () => {
       const rect = canvas.getBoundingClientRect()
