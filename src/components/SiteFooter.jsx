@@ -16,7 +16,7 @@ function PixelArrow() {
   )
 }
 
-const MARQUEE_PHRASES = ['MAKE WITH ME', 'BREAK WITH ME', 'THINK WITH ME', 'VIBE WITH ME']
+const MARQUEE_PHRASES = ['Make with me', 'Break with me', 'Think with me', 'Vibe with me']
 const MARQUEE_ITEMS = Array.from({ length: 3 }).flatMap(() => MARQUEE_PHRASES)
 
 export default function SiteFooter() {
