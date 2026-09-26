@@ -26,10 +26,14 @@ export default function AboutText({ text, className = 'hm-about__text' }) {
               {
                 yPercent: 0,
                 opacity: 1,
-                duration: 0.9,
-                ease: 'power3.out',
+                ease: 'power2.out',
                 stagger: 0.006,
-                scrollTrigger: { trigger: ref.current, start: 'top 50%', once: true },
+                scrollTrigger: {
+                  trigger: ref.current,
+                  start: 'top 85%',
+                  end: 'top 35%',
+                  scrub: 0.3,
+                },
               },
             ),
         })
