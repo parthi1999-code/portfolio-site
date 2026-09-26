@@ -246,31 +246,20 @@ function Network() {
       draw()
     }
 
-    const wireframe = (node, time) => {
-      if (node.a <= 0.01) return
-      const cx = node.x * W
-      const cy = node.y * H
-      const size = Math.min(W, H) * 0.09
-      ctx2d.save()
-      ctx2d.globalAlpha = node.a
-      ctx2d.strokeStyle = `rgba(${GREEN_RGB}, 0.5)`
-      ctx2d.lineWidth = 1
-      ctx2d.shadowColor = `rgba(${GREEN_RGB}, 0.6)`
-      ctx2d.shadowBlur = 6
-      for (let i = 0; i < 3; i++) {
-        const tilt = 0.18 + i * 0.05 + Math.sin(time * 0.15 + i) * 0.03
-        const offset = i * size * 0.12
-        const w = size * 1.4
-        const h = size * 0.9
-        ctx2d.beginPath()
-        ctx2d.moveTo(cx - w / 2 - offset, cy - h / 2 + offset * tilt * 4)
-        ctx2d.lineTo(cx + w / 2 - offset, cy - h / 2 - offset + offset * tilt * 4)
-        ctx2d.lineTo(cx + w / 2 + offset, cy + h / 2 - offset)
-        ctx2d.lineTo(cx - w / 2 + offset, cy + h / 2 + offset)
-        ctx2d.closePath()
-        ctx2d.stroke()
-      }
-      ctx2d.restore()
+    const line = (ay, bend, node, alphaScale) => {
+      const a = node.a * alphaScale
+      if (a <= 0.01) return
+      const x = node.x * W
+      const y = node.y * H
+      const g = ctx2d.createLinearGradient(0, 0, Math.max(x, 1), 0)
+      g.addColorStop(0, `rgba(${GREEN_RGB}, ${(0.4 * a).toFixed(3)})`)
+      g.addColorStop(1, `rgba(${GREEN_RGB}, ${(0.95 * a).toFixed(3)})`)
+      ctx2d.strokeStyle = g
+      ctx2d.lineWidth = 1.5
+      ctx2d.beginPath()
+      ctx2d.moveTo(0, ay * H)
+      ctx2d.bezierCurveTo(x * 0.42, ay * H + bend, x * 0.7, y + bend * 0.55, x, y)
+      ctx2d.stroke()
     }
 
     const dot = (node, r, white) => {
@@ -312,8 +301,14 @@ function Network() {
       })
       ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx2d.clearRect(0, 0, W, H)
+      const trail = (track, node) => {
+        const back = sampleTrack(track, Math.max(time - 0.22, 0))
+        return Math.max(-230, Math.min(230, (back[1] - node.y) * H * 2.1))
+      }
+      NET_NODES.forEach((n, i) => line(n.ay, trail(n.track, state.nodes[i]) + n.bend * 0.35, state.nodes[i], 1))
+      line(0.46, trail(MAIN_TRACK, state.main) + 20, state.main, 1)
       state.nodes.forEach((n) => dot(n, 3.5, 0))
-      wireframe(state.main, time)
+      dot(state.main, state.main.r, state.main.white)
       state.nodes.forEach((n, i) => place(i + 1, n, 3.5))
       place(0, state.main, state.main.r)
     }
