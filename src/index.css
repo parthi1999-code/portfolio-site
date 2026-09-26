@@ -100,7 +100,9 @@
   pointer-events: none;
   display: grid;
   place-items: center;
-  animation: page-transition-fade 0.28s ease 0.6s forwards;
+  opacity: 0;
+  animation: page-transition-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    page-transition-out 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.78s forwards;
 }
 .page-transition__mark {
   width: 198px;
@@ -113,17 +115,22 @@
 .page-transition__tile { position: relative; width: 92px; height: 92px; }
 .page-transition__tile-fill {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 92px;
-  height: 0;
-  overflow: hidden;
-  animation: intro-wipe 0.34s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  animation-delay: calc(30ms + var(--order) * 60ms);
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.82);
+  transform-origin: center;
+  animation: page-transition-tile 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(160ms + var(--order) * 80ms);
 }
-.page-transition__tile-fill svg { position: absolute; left: 0; bottom: 0; display: block; }
-@keyframes page-transition-fade {
+.page-transition__tile-fill svg { position: absolute; inset: 0; display: block; }
+@keyframes page-transition-in {
+  to { opacity: 1; }
+}
+@keyframes page-transition-out {
   to { opacity: 0; }
+}
+@keyframes page-transition-tile {
+  to { opacity: 1; transform: scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
   .page-transition__tile-fill { animation-duration: 0.01s; }

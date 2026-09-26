@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const VISIBLE_MS = 900
+const VISIBLE_MS = 1300
 
 function Tile({ flipX, flipY, order }) {
   return (
