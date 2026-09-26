@@ -100,9 +100,8 @@
   pointer-events: none;
   display: grid;
   place-items: center;
-  opacity: 0;
-  animation: page-transition-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards,
-    page-transition-out 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.78s forwards;
+  opacity: 1;
+  animation: page-transition-out 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.78s forwards;
 }
 .page-transition__mark {
   width: 198px;
@@ -123,9 +122,6 @@
   animation-delay: calc(160ms + var(--order) * 80ms);
 }
 .page-transition__tile-fill svg { position: absolute; inset: 0; display: block; }
-@keyframes page-transition-in {
-  to { opacity: 1; }
-}
 @keyframes page-transition-out {
   to { opacity: 0; }
 }
