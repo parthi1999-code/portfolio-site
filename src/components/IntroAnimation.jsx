@@ -7,30 +7,62 @@ const BOTTOM_LABEL = 'PERSONAL WEBSITE'
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const FADE_START_MS = 1900
 
-function useScramble(finalText, startDelay, perCharDelay) {
-  const [text, setText] = useState(() =>
-    finalText.replace(/[^ ]/g, () => SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)])
-  )
+function scrambleChar() {
+  return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+}
+
+function randomize(text) {
+  return text.replace(/[^ ]/g, scrambleChar)
+}
+
+function resolveText(finalText, elapsed, perCharDelay) {
+  let out = ''
+  for (let i = 0; i < finalText.length; i++) {
+    const ch = finalText[i]
+    out += ch === ' ' ? ' ' : elapsed >= i * perCharDelay + 240 ? ch : scrambleChar()
+  }
+  return out
+}
+
+// Drives both labels off a single requestAnimationFrame loop (instead of two
+// independent setInterval timers) so they stay in step with the browser's
+// paint cycle -- and everything else competing for the main thread while the
+// rest of the page mounts underneath -- rather than ticking on their own
+// disconnected 40ms clock.
+function useScrambleLabels() {
+  const [labels, setLabels] = useState(() => ({
+    top: randomize(TOP_LABEL),
+    bottom: randomize(BOTTOM_LABEL),
+  }))
 
   useEffect(() => {
-    const start = performance.now() + startDelay
-    const id = setInterval(() => {
-      const elapsed = performance.now() - start
-      const next = finalText
-        .split('')
-        .map((ch, i) => {
-          if (ch === ' ') return ' '
-          if (elapsed >= i * perCharDelay + 240) return ch
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
-        })
-        .join('')
-      setText(next)
-      if (next === finalText) clearInterval(id)
-    }, 40)
-    return () => clearInterval(id)
-  }, [finalText, startDelay, perCharDelay])
+    let raf = 0
+    let last = 0
+    const start = performance.now()
+    const topDone = TOP_LABEL.length * 55 + 240
+    const bottomStart = 60
+    const bottomDone = bottomStart + BOTTOM_LABEL.length * 38 + 240
 
-  return text
+    const tick = (now) => {
+      // throttle to ~25fps -- plenty smooth for a text scramble, a fraction
+      // of the work of updating every animation frame
+      if (now - last >= 40) {
+        last = now
+        const elapsed = now - start
+        setLabels({
+          top: resolveText(TOP_LABEL, elapsed, 55),
+          bottom: resolveText(BOTTOM_LABEL, elapsed - bottomStart, 38),
+        })
+      }
+      if (now - start < Math.max(topDone, bottomDone)) {
+        raf = requestAnimationFrame(tick)
+      }
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  return labels
 }
 
 function Grain() {
@@ -71,11 +103,21 @@ function Grain() {
         }
       }
     }
+
+    let raf = 0
+    let last = 0
+    const tick = (now) => {
+      if (now - last >= 40) {
+        last = now
+        draw()
+      }
+      raf = requestAnimationFrame(tick)
+    }
     draw()
-    const id = setInterval(draw, 40)
+    raf = requestAnimationFrame(tick)
 
     return () => {
-      clearInterval(id)
+      cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
     }
   }, [])
@@ -108,8 +150,7 @@ function Tile({ flipX, flipY, order }) {
 
 export default function IntroAnimation() {
   const [visible, setVisible] = useState(true)
-  const top = useScramble(TOP_LABEL, 0, 55)
-  const bottom = useScramble(BOTTOM_LABEL, 60, 38)
+  const { top, bottom } = useScrambleLabels()
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(false), DURATION_MS)

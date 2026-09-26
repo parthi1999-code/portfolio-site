@@ -56,11 +56,26 @@ function Rise({ children, offset = 0 }) {
 }
 
 function Hero() {
+  // The intro overlay is fully opaque until it starts fading at 1900ms, so
+  // mounting the three.js object earlier only steals main-thread time from
+  // the intro's own animation for zero visible benefit. Start it a little
+  // before the fade begins instead, so it's warmed up by the time it's
+  // actually visible.
+  const [showObject, setShowObject] = useState(() => performance.now() > INTRO_DURATION_MS - 600)
+  useEffect(() => {
+    if (showObject) return
+    const delay = Math.max(0, INTRO_DURATION_MS - 600 - performance.now())
+    const timer = setTimeout(() => setShowObject(true), delay)
+    return () => clearTimeout(timer)
+  }, [showObject])
+
   return (
     <section id="hero" className="hm-hero" data-nav="hero" data-theme="dark">
-      <Suspense fallback={null}>
-        <HeroObject />
-      </Suspense>
+      {showObject && (
+        <Suspense fallback={null}>
+          <HeroObject />
+        </Suspense>
+      )}
       <p className="hm-hero__tagline" style={{ animationDelay: riseDelay(0.5) }}>
         From <span className="dim">research</span> to <span className="dim">release</span>, I design
         clear, usable products that turn <span className="dim">complex</span> workflows into{' '}
