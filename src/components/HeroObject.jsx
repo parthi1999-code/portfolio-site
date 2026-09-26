@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
-const GREEN = 0x66ff8c
+const GREEN = 0x2f5fff
 const DRAG_SENSITIVITY = 0.008
 const INERTIA_DECAY = 0.94
 
